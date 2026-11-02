@@ -18,7 +18,7 @@ Claude Code 插件：把实习日志从「每天写」到「月结 → 素材库
 ### 本地开发 / 试用
 
 ```bash
-claude --plugin-dir "D:\projects\claudecode-plugings\internflow"
+claude --plugin-dir "/path/to/internflow"
 ```
 
 加载后 skill 以插件名为命名空间，例如 `internflow:internship-log`。修改 skill 后重开会话，或在会话里运行 `/reload-plugins`。
@@ -32,6 +32,8 @@ claude plugin marketplace add https://github.com/renhao-wan/internflow.git
 claude plugin install internflow@internflow-marketplace
 ```
 
+> **第一次使用**：先运行 `/internship-log-rule-init` 定一份规则；之后日常写日志用 `/internship-log`。完整顺序见下文「从零使用顺序」。
+
 ## Skills
 
 | Skill | 用途 | 面向 |
@@ -43,6 +45,14 @@ claude plugin install internflow@internflow-marketplace
 | `internship-log-rule-maintain` | 修改规则并同步执行 skill 的引用 | 维护者 |
 
 Skill 名保持 `internship-log` 等原名，避免与旧的独立 skill 撞名；加载后由插件名提供命名空间，不会出现 `internship-log:internship-log` 这种前缀。
+
+### 审核范围
+
+| 调用 | 审核范围 |
+|---|---|
+| `/internship-log-review` | 最新月份的完整日志 |
+| `/internship-log-review 2026-10` | 指定月份 |
+| `/internship-log-review today` | 只审最新一条记录 |
 
 ## 从零使用顺序
 
@@ -78,14 +88,15 @@ Skill 名保持 `internship-log` 等原名，避免与旧的独立 skill 撞名�
 
 ```json
 {
-  "rules": "D:/学习/学习文档/实习/规则.md",
-  "log_root": "D:/学习/学习文档/实习"
+  "rules": "D:/path/to/internship/规则.md",
+  "log_root": "D:/path/to/internship"
 }
 ```
 
 路径统一用正斜杠，避免 Windows 反斜杠转义。约束：
 
-- 路径问齐后自动创建，不需要额外确认；用户本次给出的新路径直接更新配置
+- 路径问齐后自动创建，不需要额外确认；用户本次给出的新路径校验通过后直接更新配置
+- 覆盖已有值前先校验：`rules` 必须指向存在的文件，`log_root` 必须指向存在的目录；不满足就报错重问，不覆盖旧值
 - 配置按项目根存放：在实习数据目录（作为项目根）启动 Claude Code 才能自动读到；换目录启动会重新询问
 - 配置里的路径失效时，skill 报出原路径并重新询问，不自动搜索
 - 文件含本地绝对路径；项目是 git 仓库时，先确认它没被提交，必要时加入 `.gitignore`
@@ -94,7 +105,7 @@ Skill 名保持 `internship-log` 等原名，避免与旧的独立 skill 撞名�
 
 ### 规则章节顺序
 
-skill 里的「按规则第 X 节」按下面顺序引用。规则增删或重排章节后，用 `internship-log-rule-maintain` 同步更新引用。
+skill 和 README 里的「按规则第 X 节」按下面顺序引用。规则增删或重排章节后，用 `internship-log-rule-maintain` 同步更新引用和这张表；skill 和 README 都不要复述规则里的数字（轮数、条数上限等），需要时改成「按规则第 X 节」。
 
 | 节号 | 章节 |
 |---|---|
@@ -117,6 +128,8 @@ internflow/
 ├── .claude-plugin/
 │   ├── plugin.json
 │   └── marketplace.json
+├── .github/
+│   └── workflows/validate.yml
 ├── skills/
 │   ├── internship-log/SKILL.md
 │   ├── internship-log-review/SKILL.md
@@ -129,20 +142,31 @@ internflow/
 │   └── 素材库.template.md
 ├── references/
 │   └── workspace.md
+├── tests/
+│   └── regression/
+│       ├── README.md
+│       └── fixtures/
+├── scripts/
+│   └── check.mjs
 ├── README.md
+├── CHANGELOG.md
 ├── LICENSE
+├── .gitattributes
 └── .gitignore
 ```
 
 ## 开发与校验
 
 ```bash
+node scripts/check.mjs
 claude plugin validate --strict .claude-plugin/plugin.json
 claude plugin validate --strict .claude-plugin/marketplace.json
 claude plugin validate --strict skills
 ```
 
-要求全部通过后再发布。`claude plugin tag` 可在发布时生成版本 tag，但它会校验 `plugin.json` 和 marketplace 条目是否一致。
+要求全部通过后再发布。`scripts/check.mjs` 不依赖外部包，检查清单结构、skill 命名与 frontmatter、插件内路径引用、规则节号范围、README 章节表，以及文档里是否混入真实本地路径；GitHub Actions 在 push 和 PR 时运行它。`claude plugin tag` 可在发布时生成版本 tag，但它会校验 `plugin.json` 和 marketplace 条目是否一致。
+
+人工回归样例见 `tests/regression/README.md`，覆盖写日志、审核、月结、改规则和工作区配置五个场景。
 
 ## 约束
 

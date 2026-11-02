@@ -1,6 +1,6 @@
 ---
 name: internship-log-rule-maintain
-description: 维护实习日志规则文件。当用户说“改规则”“加一条规则”“调整规则文件”“这条规则该怎么定”时使用。判断一条要求属于内容标准、流程还是实现细节，改到规则文件或对应的执行 skill，并在改规则后检查三个执行 skill 的引用是否需同步。
+description: 维护实习日志规则文件。当用户说“改规则”“加一条规则”“调整规则文件”“这条规则该怎么定”时使用。判断一条要求属于内容标准、流程还是实现细节，改到规则文件或对应的执行 skill，并在改规则后检查三个执行 skill 和 README 的引用、节号与数字复述是否需同步。
 ---
 
 # 实习日志规则维护
@@ -20,7 +20,7 @@ description: 维护实习日志规则文件。当用户说“改规则”“加�
 ## 第一步：确认输入与目标
 
 1. 问清用户要改什么：新增 / 修改 / 删除，具体到一句话。
-2. 读规则文件全文，读三个执行 skill（internship-log、internship-log-review、internship-log-monthly），找出哪些地方已经引用了这条内容——引用处和复述处都是后续的同步点。
+2. 读规则文件全文，读三个执行 skill（internship-log、internship-log-review、internship-log-monthly）和 README 的「规则章节顺序」表，找出哪些地方已经引用了这条内容——引用处、复述处和节号副本都是后续的同步点。
 3. 确认改动属于上面哪一类；跨类时拆开处理（标准进规则，流程进 skill）。
 4. 按插件根目录的 `references/workspace.md`（`${CLAUDE_PLUGIN_ROOT}/references/workspace.md`）读项目根目录的 `.claude/internflow/config.json` 定位规则文件；有配置且用户给了新路径时按 workspace.md 直接更新；没有配置时只询问规则文件路径，不强行创建配置，`log_root` 留到写日志或月结时补全；路径失效时询问用户，不要猜。
 5. 确认规则实例路径。规则实例只在用户数据目录，插件内只有 `templates/规则.template.md`（`${CLAUDE_PLUGIN_ROOT}/templates/规则.template.md`）；不要把插件模板当成用户规则来改。
@@ -42,6 +42,9 @@ description: 维护实习日志规则文件。当用户说“改规则”“加�
 - 章节增删或重排时，全局搜索 `按规则第`，按新节号逐个更新；同时更新「第 X 节『节名』」里的节名
 - 没受影响的，明确说「无影响」
 - 若某条标准在三个 skill 里被反复抄，建议改成「按规则第 X 节」，减少今后同步；但由用户决定是否动
+- README.md 的「规则章节顺序」表和其中的「按规则第 X 节」也要跟着改；这张表和 skill 里的引用一样是节号的副本
+- 检查 skill 和 README 有没有复述规则里的数字（如提问轮数、明天条数、未解决条数）；有就改成「按规则第 X 节」，或明确标注为本 skill 的操作阈值
+- 改完运行 `node scripts/check.mjs`，确认节号范围、章节名和 README 表格一致
 
 ## 第四步：交付前检查
 
@@ -50,6 +53,8 @@ description: 维护实习日志规则文件。当用户说“改规则”“加�
 - 规则里没有混进实现细节
 - 新增条款和已有条款不冲突；冲突的说明以哪个为准
 - 所有「按规则第 X 节」引用都指向正确的节；章节重排后已全部更新
+- README 的章节表、节号引用和数字复述已同步
+- `node scripts/check.mjs` 通过
 - 这个 skill 不改日志正文、不出日志内容、不 `git commit`
 
 ## 禁止
