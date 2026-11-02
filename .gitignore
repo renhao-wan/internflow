@@ -1,0 +1,24 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+*.log
+
+# Claude Code local state
+.claude/
+.claude-plugin/*.local.json
+
+# CC GUI local state
+.ccgui/
+
+# Node / packaging
+node_modules/
+coverage/
+dist/
+*.zip
+
+# Guard: user internship data must never enter this repo
+规则.md
+素材库.md
+主题笔记/
+架构图/
+20??-??.md

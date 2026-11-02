@@ -1,0 +1,21 @@
+{
+  "$schema": "https://anthropic.com/claude-code/plugin.schema.json",
+  "name": "internflow",
+  "description": "Internship log workflow for Claude Code: write, review, and summarize internship logs from a single rule source.",
+  "version": "0.1.0",
+  "author": {
+    "name": "renhao-wan"
+  },
+  "homepage": "https://github.com/renhao-wan/internflow",
+  "repository": "https://github.com/renhao-wan/internflow.git",
+  "license": "MIT",
+  "keywords": [
+    "internship",
+    "log",
+    "journal",
+    "review",
+    "monthly",
+    "skills",
+    "claude-code"
+  ]
+}

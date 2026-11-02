@@ -1,0 +1,18 @@
+{
+  "name": "internflow-marketplace",
+  "owner": {
+    "name": "renhao-wan"
+  },
+  "metadata": {
+    "description": "Local marketplace for the internflow plugin",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "internflow",
+      "description": "Internship log workflow: write, review, and summarize from a single rule source",
+      "source": "./",
+      "strict": false
+    }
+  ]
+}
