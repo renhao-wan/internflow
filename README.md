@@ -48,9 +48,11 @@ Skill 名保持 `internship-log` 等原名，避免与旧的独立 skill 撞名�
 
 1. `internship-log-rule-init`：定一份规则，写到你的用户数据目录。
 2. `internship-log`：每天写日志；技术细节外置到 `主题笔记/`。
-3. `internship-log-review`：需要时审日志，只读，不改文件。
+3. `internship-log-review`：需要时审日志，只读，不改日志正文。
 4. `internship-log-monthly`：月底写本月小结，挑案例进素材库。
 5. 规则要改时用 `internship-log-rule-maintain`；它会同时检查三个执行 skill 的引用。
+
+第一次运行会询问规则文件和日志根目录。问齐后自动保存到项目根目录的 `.claude/internflow/config.json`，之后不用重复输入。
 
 ## 规则与数据
 
@@ -69,6 +71,26 @@ Skill 名保持 `internship-log` 等原名，避免与旧的独立 skill 撞名�
 插件内只有 `templates/规则.template.md`，它是章节骨架，不是规则实例。使用者复制到自己的数据目录后再填写。
 
 日志里的 `[[规则]]` 是 Obsidian 双链，规则留在用户数据目录即可保持有效；插件不复制、不软链、不覆盖这份实例。
+
+## 工作区配置
+
+规则文件和日志根目录的路径保存在项目根目录的 `.claude/internflow/config.json`，不用每次重新输入：
+
+```json
+{
+  "rules": "D:/学习/学习文档/实习/规则.md",
+  "log_root": "D:/学习/学习文档/实习"
+}
+```
+
+路径统一用正斜杠，避免 Windows 反斜杠转义。约束：
+
+- 路径问齐后自动创建，不需要额外确认；用户本次给出的新路径直接更新配置
+- 配置按项目根存放：在实习数据目录（作为项目根）启动 Claude Code 才能自动读到；换目录启动会重新询问
+- 配置里的路径失效时，skill 报出原路径并重新询问，不自动搜索
+- 文件含本地绝对路径；项目是 git 仓库时，先确认它没被提交，必要时加入 `.gitignore`
+
+查找顺序和完整约定见 `references/workspace.md`。
 
 ### 规则章节顺序
 
@@ -105,6 +127,8 @@ internflow/
 │   ├── 规则.template.md
 │   ├── 日志.template.md
 │   └── 素材库.template.md
+├── references/
+│   └── workspace.md
 ├── README.md
 ├── LICENSE
 └── .gitignore

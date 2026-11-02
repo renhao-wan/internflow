@@ -22,7 +22,8 @@ description: 维护实习日志规则文件。当用户说“改规则”“加�
 1. 问清用户要改什么：新增 / 修改 / 删除，具体到一句话。
 2. 读规则文件全文，读三个执行 skill（internship-log、internship-log-review、internship-log-monthly），找出哪些地方已经引用了这条内容——引用处和复述处都是后续的同步点。
 3. 确认改动属于上面哪一类；跨类时拆开处理（标准进规则，流程进 skill）。
-4. 确认规则实例路径。规则实例只在用户数据目录，插件内只有 `templates/规则.template.md`（相对本 skill 为 `../../templates/规则.template.md`）；不要把插件模板当成用户规则来改。
+4. 按插件根目录的 `references/workspace.md`（`${CLAUDE_PLUGIN_ROOT}/references/workspace.md`）读项目根目录的 `.claude/internflow/config.json` 定位规则文件；有配置且用户给了新路径时按 workspace.md 直接更新；没有配置时只询问规则文件路径，不强行创建配置，`log_root` 留到写日志或月结时补全；路径失效时询问用户，不要猜。
+5. 确认规则实例路径。规则实例只在用户数据目录，插件内只有 `templates/规则.template.md`（`${CLAUDE_PLUGIN_ROOT}/templates/规则.template.md`）；不要把插件模板当成用户规则来改。
 
 ## 第二步：改规则文件
 
