@@ -32,7 +32,7 @@ claude plugin marketplace add https://github.com/renhao-wan/internflow.git
 claude plugin install internflow@internflow-marketplace
 ```
 
-> **第一次使用**：先运行 `/internship-log-rule-init` 定一份规则；之后日常写日志用 `/internship-log`。完整顺序见下文「从零使用顺序」。
+> **第一次使用**：先运行 `/internflow:internship-log-rule-init` 定一份规则；之后日常写日志用 `/internflow:internship-log`。完整顺序见下文「从零使用顺序」。
 
 ## Skills
 
@@ -50,9 +50,9 @@ Skill 名保持 `internship-log` 等原名，避免与旧的独立 skill 撞名�
 
 | 调用 | 审核范围 |
 |---|---|
-| `/internship-log-review` | 最新月份的完整日志 |
-| `/internship-log-review 2026-10` | 指定月份 |
-| `/internship-log-review today` | 只审最新一条记录 |
+| `/internflow:internship-log-review` | 最新月份的完整日志 |
+| `/internflow:internship-log-review 2026-10` | 指定月份 |
+| `/internflow:internship-log-review today` | 只审最新一条记录 |
 
 ## 从零使用顺序
 

@@ -32,7 +32,7 @@
 
 ### R1 写日志
 
-运行 `/internship-log`，用虚构内容描述 `2026-11-02`。
+运行 `/internflow:internship-log`，用虚构内容描述 `2026-11-02`。
 
 检查：
 
@@ -44,7 +44,7 @@
 
 ### R2 审核（整月）
 
-运行 `/internship-log-review 2026-10`。
+运行 `/internflow:internship-log-review 2026-10`。
 
 检查：
 
@@ -57,7 +57,7 @@
 
 ### R3 月结
 
-运行 `/internship-log-monthly`。
+运行 `/internflow:internship-log-monthly`。
 
 检查：
 
@@ -69,7 +69,7 @@
 
 ### R4 改规则
 
-运行 `/internship-log-rule-maintain`，把「保密」和「月结与素材库」调换顺序。
+运行 `/internflow:internship-log-rule-maintain`，把「保密」和「月结与素材库」调换顺序。
 
 检查：
 

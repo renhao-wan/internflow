@@ -1,6 +1,6 @@
 ---
 name: internship-log-monthly
-description: 写实习日志月结。当用户说"写月结""生成月结""本月小结""提炼这个月的记录"，或调用 /internship-log-monthly 时使用。读当月日志和规则文件，生成本月小结、收口待问，并把合格案例写进素材库。
+description: 写实习日志月结。当用户说"写月结""生成月结""本月小结""提炼这个月的记录"，或调用 /internflow:internship-log-monthly 时使用。读当月日志和规则文件，生成本月小结、收口待问，并把合格案例写进素材库。
 ---
 
 # 实习日志月结
