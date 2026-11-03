@@ -80,9 +80,12 @@
 
 ### R5 工作区配置
 
-- 给一个不存在的路径：不写入配置，报错重问
+- 首次运行前没有 `.claude/internflow/`：skill 只读配置，不创建目录
+- 路径没问齐或中途放弃：不留下 `.claude/internflow/`
+- 给一个不存在的路径：不写入配置，报错重问，仍不创建目录
 - 破坏 `.claude/internflow/config.json` 的 JSON：按无配置处理，覆盖前告知
-- 只给 `rules` 不给 `log_root`：只保存有效字段，缺的继续问
+- 只给 `rules` 不给 `log_root`：不写入部分配置，继续问缺失字段，问齐后一次写入
+- `rule-maintain` 在无配置时只问规则路径，不创建配置文件
 
 ## 提交限制
 
