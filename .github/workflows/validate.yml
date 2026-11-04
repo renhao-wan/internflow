@@ -24,4 +24,3 @@ jobs:
         run: |
           claude plugin validate --strict .claude-plugin/plugin.json
           claude plugin validate --strict .claude-plugin/marketplace.json
-          claude plugin validate --strict skills

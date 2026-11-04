@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.1（2026-11-04）
+
+### 修复
+
+- CI 不再调用 `claude plugin validate --strict skills`。新版 CLI 把目录参数当作必须含 manifest 的插件目录，会报错；组件结构继续由 `scripts/check.mjs` 校验
+
 ## 0.2.0（2026-11-04）
 
 ### 变更

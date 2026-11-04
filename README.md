@@ -3,7 +3,7 @@
 Claude Code 插件：把实习日志从「每天写」到「月结 → 素材库」的流程收敛成一套可复用的 skill，并保证内容标准只有一个源。
 
 - 插件名：`internflow`
-- 当前版本：`0.2.0`
+- 当前版本：`0.2.1`
 - 许可证：MIT
 
 ## 设计原则
@@ -168,10 +168,9 @@ internflow/
 node scripts/check.mjs
 claude plugin validate --strict .claude-plugin/plugin.json
 claude plugin validate --strict .claude-plugin/marketplace.json
-claude plugin validate --strict skills
 ```
 
-要求全部通过后再发布。`scripts/check.mjs` 不依赖外部包，检查清单结构、skill 命名与 frontmatter、插件内路径引用、规则节号范围、README 章节表、配置路径与中文数字复述，以及文档里是否混入真实本地路径。GitHub Actions 在 push 和 PR 时先运行它，再安装 Claude Code CLI 运行上面三项官方校验。`claude plugin tag` 可在发布时生成版本 tag，但它会校验 `plugin.json` 和 marketplace 条目是否一致。
+要求全部通过后再发布。skill、agent、command 目录的结构校验由 `scripts/check.mjs` 负责，不依赖 `claude plugin validate` 对组件目录的版本差异。`scripts/check.mjs` 不依赖外部包，检查清单结构、skill 命名与 frontmatter、插件内路径引用、规则节号范围、README 章节表、配置路径与中文数字复述，以及文档里是否混入真实本地路径。GitHub Actions 在 push 和 PR 时先运行它，再安装 Claude Code CLI 运行上面两项官方校验。`claude plugin tag` 可在发布时生成版本 tag，但它会校验 `plugin.json` 和 marketplace 条目是否一致。
 
 人工回归样例见 `tests/regression/README.md`，覆盖写日志、审核、月结、改规则和工作区配置五个场景。
 
