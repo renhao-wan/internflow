@@ -48,8 +48,13 @@ if (market) {
     const entry = market.plugins.find((item) => item.name === plugin?.name);
     if (!entry) {
       fail(`marketplace.json 没有与 plugin.json 同名的条目（${plugin?.name}）`);
-    } else if (!existsSync(resolve(root, entry.source))) {
-      fail(`marketplace 条目 source 不存在：${entry.source}`);
+    } else {
+      if (!existsSync(resolve(root, entry.source))) {
+        fail(`marketplace 条目 source 不存在：${entry.source}`);
+      }
+      if (plugin?.version && entry.version !== plugin.version) {
+        fail(`marketplace 条目 version (${entry.version ?? '未设置'}) 与 plugin.json (${plugin.version}) 不一致`);
+      }
     }
   }
   if (market.metadata?.version && plugin?.version && market.metadata.version !== plugin.version) {
@@ -129,8 +134,15 @@ for (const dir of skillDirs) {
 
 for (const name of requiredSkills) {
   const text = skillTexts[name];
-  if (text && !text.includes('${CLAUDE_PLUGIN_ROOT}/references/workspace.md')) {
+  if (!text) continue;
+  if (!text.includes('${CLAUDE_PLUGIN_ROOT}/references/workspace.md')) {
     fail(`skills/${name}/SKILL.md 没有引用 references/workspace.md`);
+  }
+  if (!text.includes('.claude/internflow.local.md')) {
+    fail(`skills/${name}/SKILL.md 没有引用工作区配置 .claude/internflow.local.md`);
+  }
+  if (text.includes('.claude/internflow/config.json')) {
+    fail(`skills/${name}/SKILL.md 仍引用旧配置路径 .claude/internflow/config.json`);
   }
 }
 
@@ -157,7 +169,17 @@ const realPathPatterns = [
   /\/Users\/[^/\s]+/,
   /\/home\/[^/\s]+/,
 ];
-for (const rel of ['README.md', 'references/workspace.md']) {
+const pathScanFiles = [
+  'README.md',
+  'references/workspace.md',
+  'tests/regression/README.md',
+  'templates/规则.template.md',
+  'templates/日志.template.md',
+  'templates/素材库.template.md',
+  'CHANGELOG.md',
+  ...skillDirs.map((dir) => `skills/${dir}/SKILL.md`),
+];
+for (const rel of pathScanFiles) {
   const text = rel === 'README.md' ? readme : read(rel);
   if (text === null) continue;
   for (const match of text.matchAll(/[A-Za-z]:[\\/][^\s"'`）)<>]+|\/(?:Users|home)\/[^\s"'`）)<>]+/g)) {
@@ -180,21 +202,38 @@ for (const rel of [
 }
 
 const gitignore = read('.gitignore') ?? '';
+const gitignoreLines = gitignore.split(/\r?\n/).map((line) => line.trim());
 const guarded = ['规则.md', '素材库.md', '主题笔记/', '架构图/', '20??-??.md'];
 for (const pattern of guarded) {
-  if (!gitignore.split(/\r?\n/).some((line) => line.trim() === pattern)) {
+  if (!gitignoreLines.includes(pattern)) {
     fail(`.gitignore 缺少用户数据防护：${pattern}`);
+  }
+}
+for (const pattern of ['.claude/*.local.md', '.claude/*.local.json']) {
+  if (!gitignoreLines.includes(pattern)) {
+    fail(`.gitignore 缺少插件本地配置防护：${pattern}`);
   }
 }
 
 const restatements = [
-  { pattern: /\b7-9\s*轮/, tip: '提问轮数应由规则第 8 节定义' },
+  { pattern: /(?:^|[^\d])7-9\s*轮/, tip: '提问轮数应由规则第 8 节定义' },
   { pattern: /最多\s*3\s*条/, tip: '「明天」条数应由规则第 4 节第 5 条定义' },
   { pattern: /最多(留)?\s*五\s*条/, tip: '未解决条数应由规则第 10 节第 5 条定义' },
+  { pattern: /[一二三四五六七八九十两]+\s*轮/, tip: '提问轮数应由规则第 8 节定义', allowThreshold: true },
+  { pattern: /(?:必问|必写|必填)\s*[一二三四五六七八九十两]+\s*项/, tip: '必写项数应由规则定义' },
+  { pattern: /[一二三四五六七八九十两]+\s*项\s*(?:小结|字段|内容|要素|数据)/, tip: '小结项或素材库字段数应由规则第 10 节定义' },
+  { pattern: /(?:凑满|填满|写满)\s*[一二三四五六七八九十两]+\s*块/, tip: '日志分块应由规则第 4 节定义' },
+  { pattern: /[一二三四五六七八九十两]+\s*块\s*(?:组织|结构)/, tip: '日志分块应由规则第 4 节定义' },
+  { pattern: /(?:最多|不超过|至多)\s*[一二三四五六七八九十两]+\s*(?:条|项|点|轮)/, tip: '数量上限应由规则定义' },
 ];
 for (const [dir, text] of Object.entries(skillTexts)) {
-  for (const { pattern, tip } of restatements) {
-    if (pattern.test(text)) fail(`skills/${dir}/SKILL.md 复述了规则数字：${tip}`);
+  for (const [index, line] of text.split(/\r?\n/).entries()) {
+    for (const { pattern, tip, allowThreshold } of restatements) {
+      if (allowThreshold && line.includes('操作阈值')) continue;
+      if (pattern.test(line)) {
+        fail(`skills/${dir}/SKILL.md:${index + 1} 复述了规则数字：${tip}`);
+      }
+    }
   }
 }
 

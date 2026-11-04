@@ -4,49 +4,56 @@
 
 ## 配置文件
 
-位置：当前项目根目录下的 `.claude/internflow/config.json`
+位置：当前项目根目录下的 `.claude/internflow.local.md`。
 
-懒创建：skill 启动时只读取，不创建任何目录或文件。只有路径问齐、校验通过、即将写入配置时，才创建 `.claude/internflow/` 和 `config.json`。用户没给齐路径、校验失败或中途放弃时，不留下任何目录。
+这是 Claude Code 插件的标准本地设置形式：YAML frontmatter 存配置，Markdown 正文放说明。`.local.md` 后缀表示用户本地状态，配合 `.gitignore` 的 `.claude/*.local.md` 规则，不会被提交。
+
+懒创建：skill 启动时只读取，不创建任何目录或文件。只有路径问齐、校验通过、即将写入配置时，才创建 `.claude/` 和 `.claude/internflow.local.md`。用户没给齐路径、校验失败或中途放弃时，不留下任何目录。
 
 ## 格式
 
-```json
-{
-  "rules": "D:/path/to/internship/规则.md",
-  "log_root": "D:/path/to/internship"
-}
+```markdown
+---
+rules: "D:/path/to/internship/规则.md"
+log_root: "D:/path/to/internship"
+---
+
+# internflow 工作区配置
+
+> 由 internflow skill 自动维护；含本地绝对路径，不要提交到公开仓库。
 ```
 
 - `rules`：规则文件的绝对路径，唯一内容标准源
 - `log_root`：日志根目录，下面按 `<公司名>/<年月-岗位>/` 组织
 - 两个字段都写绝对路径，统一用正斜杠，避免 Windows 反斜杠转义
+- 路径用双引号包裹，避免 YAML 把冒号、`#` 等字符误解析
 - 文件不存在时不报错，按下面的查找顺序继续
 
 ## 查找顺序
 
 1. 用户本次明确给出的路径，最高优先
-2. 当前项目根目录下的 `.claude/internflow/config.json`
+2. 当前项目根目录下的 `.claude/internflow.local.md`
 3. 都没有 → 逐项询问，不要猜、不要用默认路径
 
-配置跟着项目目录走。在项目根启动 Claude Code 才能自动读到；换一个目录启动，就在新目录的 `.claude/internflow/` 里找，找不到就重新问。
+配置跟着项目目录走。在项目根启动 Claude Code 才能自动读到；换一个目录启动，就在新目录的 `.claude/` 里找，找不到就重新问。
 
 ## 保存
 
 - 路径问齐后直接写入，不询问用户
 - 用户本次给出的新路径在校验通过后直接覆盖旧值，不询问
 - 写入前校验：覆盖已有值时，新路径必须存在（`rules` 是文件、`log_root` 是目录），不存在就报错重问，不覆盖旧值；首次保存时 `log_root` 必须已存在，`rules` 允许文件尚未创建（由 rule-init 新建）但父目录必须存在
-- 只改 `rules` 和 `log_root`，不写日志、公司信息、账号、token
-- 写入前才创建 `.claude/internflow/`；读配置、提问和校验阶段都不创建
+- 只改 frontmatter 里的 `rules` 和 `log_root`，正文说明保持固定；不写日志、公司信息、账号、token
+- 写入前才创建 `.claude/`；读配置、提问和校验阶段都不创建
 - 更新配置不算修改日志；审核 skill 仍然不改日志正文
 - 配置不存在时，`internship-log-rule-maintain` 只询问规则文件路径，不强行创建配置；`log_root` 留到写日志或月结时补全
 
 ## 失效处理
 
 - 配置里的路径不存在：报出完整路径，请用户给新路径
-- 配置文件无法解析（JSON 损坏）：按没有配置处理，询问路径；覆盖前告诉用户原文件无法读取
+- 文件无法解析（缺 frontmatter 或 YAML 损坏）：按没有配置处理，询问路径；覆盖前告诉用户原文件无法读取
 - 不自动搜索用户磁盘；用户给新路径后直接更新配置
 - 其中一个字段有效、另一个失效时，只询问失效的那个，保留有效的那个；写入时仍一次写完整两个字段
 
 ## 隐私
 
-`config.json` 含本地绝对路径，可能带公司名或用户名。如果项目目录是 git 仓库，先确认 `.claude/internflow/config.json` 不会被提交；需要时把它写进项目的 `.gitignore`。不要把它贴进公开日志或仓库。
+`internflow.local.md` 含本地绝对路径，可能带公司名或用户名。写入前确认项目的 `.gitignore` 含 `.claude/*.local.md`；没有就先补上再写。不要把它贴进公开日志或仓库。

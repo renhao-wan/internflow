@@ -6,13 +6,15 @@
 
 1. 建一个临时项目根目录，例如 `<tmp>/internflow-regression`。
 2. 把 `fixtures/` 里的内容复制进去。
-3. 建 `<tmp>/internflow-regression/.claude/internflow/config.json`：
+3. 建 `<tmp>/internflow-regression/.claude/internflow.local.md`：
 
-   ```json
-   {
-     "rules": "<tmp>/internflow-regression/规则.md",
-     "log_root": "<tmp>/internflow-regression"
-   }
+   ```markdown
+   ---
+   rules: "<tmp>/internflow-regression/规则.md"
+   log_root: "<tmp>/internflow-regression"
+   ---
+
+   # internflow 工作区配置
    ```
 
 4. 在该目录启动 `claude --plugin-dir "/path/to/internflow"`，按下面的场景运行。
@@ -75,17 +77,18 @@
 
 - 规则文件章节顺序更新
 - 三个执行 skill 的「按规则第 X 节」全部更新
-- README 的规则章节表更新
-- `node scripts/check.mjs` 通过
+- 插件根 README 的规则章节表更新
+- `node ${CLAUDE_PLUGIN_ROOT}/scripts/check.mjs` 通过
 
 ### R5 工作区配置
 
-- 首次运行前没有 `.claude/internflow/`：skill 只读配置，不创建目录
-- 路径没问齐或中途放弃：不留下 `.claude/internflow/`
+- 首次运行前没有 `.claude/`：skill 只读配置，不创建目录
+- 路径没问齐或中途放弃：不留下 `.claude/`
 - 给一个不存在的路径：不写入配置，报错重问，仍不创建目录
-- 破坏 `.claude/internflow/config.json` 的 JSON：按无配置处理，覆盖前告知
+- 破坏 `.claude/internflow.local.md` 的 frontmatter 或 YAML：按无配置处理，覆盖前告知
 - 只给 `rules` 不给 `log_root`：不写入部分配置，继续问缺失字段，问齐后一次写入
 - `rule-maintain` 在无配置时只问规则路径，不创建配置文件
+- 写入后确认项目 `.gitignore` 的 `.claude/*.local.md` 规则能挡住该文件
 
 ## 提交限制
 

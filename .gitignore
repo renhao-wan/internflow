@@ -5,7 +5,8 @@ Thumbs.db
 
 # Claude Code local state
 .claude/
-.claude-plugin/*.local.json
+.claude/*.local.md
+.claude/*.local.json
 
 # CC GUI local state
 .ccgui/
