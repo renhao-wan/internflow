@@ -88,6 +88,7 @@ const requiredSkills = [
   'internship-log',
   'internship-log-review',
   'internship-log-monthly',
+  'internship-log-retro',
   'internship-log-rule-init',
   'internship-log-rule-maintain',
 ];
