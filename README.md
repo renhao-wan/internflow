@@ -41,7 +41,7 @@ claude plugin install internflow@internflow-marketplace
 | `internship-log` | 写当天日志、主题笔记 | 日常使用 |
 | `internship-log-review` | 只读审核日志，输出带行号和依据的问题清单 | 日常使用 |
 | `internship-log-monthly` | 写本月小结、收口待问、更新素材库 | 日常使用 |
-| `internship-log-retro` | 实习结束时汇总「未解决」，产出简历条目、面试提纲和能力清单 | 收尾 |
+| `internship-log-retro` | 实习结束时汇总「未解决」，产出简历素材、面试提纲和能力清单 | 收尾 |
 | `internship-log-rule-init` | 从零撰写规则 | 维护者 |
 | `internship-log-rule-maintain` | 修改规则并同步执行 skill 的引用 | 维护者 |
 
@@ -61,7 +61,7 @@ Skill 名保持 `internship-log` 等原名，避免与旧的独立 skill 撞名�
 2. `internship-log`：每天写日志；技术细节外置到 `主题笔记/`。
 3. `internship-log-review`：需要时审日志，只读，不改日志正文。
 4. `internship-log-monthly`：月底写本月小结，挑案例进素材库。
-5. `internship-log-retro`：实习结束时汇总各月小结的「未解决」，产出简历条目、面试提纲和能力清单。
+5. `internship-log-retro`：实习结束时汇总各月小结的「未解决」，产出简历素材、面试提纲和能力清单。正式简历不在插件范围内，写简历时从素材库和总结里挑。
 6. 规则要改时用 `internship-log-rule-maintain`；它会同时检查四个执行 skill 的引用。
 
 第一次运行会询问规则文件和日志根目录。问齐后自动保存到项目根目录的 `.claude/internflow.local.md`，之后不用重复输入。
