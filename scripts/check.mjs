@@ -177,6 +177,7 @@ const pathScanFiles = [
   'templates/规则.template.md',
   'templates/日志.template.md',
   'templates/素材库.template.md',
+  'templates/实习总结.template.md',
   'CHANGELOG.md',
   ...skillDirs.map((dir) => `skills/${dir}/SKILL.md`),
 ];
@@ -197,6 +198,7 @@ for (const rel of [
   'CHANGELOG.md',
   'templates/日志.template.md',
   'templates/素材库.template.md',
+  'templates/实习总结.template.md',
   'tests/regression/README.md',
 ]) {
   if (!existsSync(join(root, rel))) fail(`缺少必要文件：${rel}`);

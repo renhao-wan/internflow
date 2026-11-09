@@ -77,6 +77,7 @@ Skill 名保持 `internship-log` 等原名，避免与旧的独立 skill 撞名�
     └── <入职年月-岗位>/
         ├── YYYY-MM.md       ← 当月日志
         ├── 素材库.md
+        ├── 实习总结.md       ← 实习结束时生成
         └── 主题笔记/
 ```
 
@@ -149,7 +150,8 @@ internflow/
 ├── templates/
 │   ├── 规则.template.md
 │   ├── 日志.template.md
-│   └── 素材库.template.md
+│   ├── 素材库.template.md
+│   └── 实习总结.template.md
 ├── references/
 │   └── workspace.md
 ├── tests/
