@@ -38,12 +38,15 @@ claude plugin install internflow@internflow-marketplace
 
 | Skill | 用途 | 面向 |
 |---|---|---|
+| `help` | 显示配置状态、下一步建议和命令清单 | 入口 |
 | `internship-log` | 写当天日志、主题笔记 | 日常使用 |
 | `internship-log-review` | 只读审核日志，输出带行号和依据的问题清单 | 日常使用 |
 | `internship-log-monthly` | 写本月小结、收口待问、更新素材库 | 日常使用 |
 | `internship-log-retro` | 实习结束时汇总「未解决」，产出简历素材、面试提纲和能力清单 | 收尾 |
 | `internship-log-rule-init` | 从零撰写规则 | 维护者 |
 | `internship-log-rule-maintain` | 修改规则并同步执行 skill 的引用 | 维护者 |
+
+`/internflow:help` 是插件内帮助，与 Claude Code 内置 `/help` 不同：内置命令列全部可用命令，插件帮助只讲 internflow 的状态、下一步和用法。支持 `/internflow:help config|log|monthly|retro|rules|all` 查看主题。
 
 Skill 名保持 `internship-log` 等原名，避免与旧的独立 skill 撞名；加载后由插件名提供命名空间，不会出现 `internship-log:internship-log` 这种前缀。
 
@@ -154,6 +157,7 @@ internflow/
 ├── .github/
 │   └── workflows/validate.yml
 ├── skills/
+│   ├── help/SKILL.md
 │   ├── internship-log/SKILL.md
 │   ├── internship-log-review/SKILL.md
 │   ├── internship-log-monthly/SKILL.md

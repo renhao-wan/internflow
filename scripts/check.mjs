@@ -91,6 +91,7 @@ const requiredSkills = [
   'internship-log-retro',
   'internship-log-rule-init',
   'internship-log-rule-maintain',
+  'help',
 ];
 for (const name of requiredSkills) {
   if (!skillDirs.includes(name)) fail(`缺少 skill：${name}`);
@@ -144,6 +145,25 @@ for (const name of requiredSkills) {
   }
   if (text.includes('.claude/internflow/config.json')) {
     fail(`skills/${name}/SKILL.md 仍引用旧配置路径 .claude/internflow/config.json`);
+  }
+}
+
+const knownSkills = new Set(skillDirs);
+for (const [dir, text] of Object.entries(skillTexts)) {
+  for (const match of text.matchAll(/\/internflow:([a-z0-9-]+)/g)) {
+    if (!knownSkills.has(match[1])) {
+      fail(`skills/${dir}/SKILL.md 引用了不存在的命令：/internflow:${match[1]}`);
+    }
+  }
+}
+
+const helpText = skillTexts.help;
+if (helpText) {
+  for (const name of requiredSkills) {
+    if (name === 'help') continue;
+    if (!helpText.includes(`/internflow:${name}`)) {
+      fail(`skills/help/SKILL.md 没有列出命令：/internflow:${name}`);
+    }
   }
 }
 
