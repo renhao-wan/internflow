@@ -51,7 +51,7 @@ description: 显示 internflow 的状态、下一步建议和命令清单。当�
 ## 输出：精简入口页
 
 ```text
-internflow 0.4.0
+internflow <版本>
 
 状态
   配置      ✓ .claude/internflow.local.md
