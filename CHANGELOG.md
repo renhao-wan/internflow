@@ -6,6 +6,7 @@
 
 - 命令名去掉重复的 internship- 前缀：`/internflow:log`、`/internflow:review`、`/internflow:monthly`、`/internflow:retro`、`/internflow:organize`、`/internflow:rule-init`、`/internflow:rule-maintain`
 - 旧命令不再保留，升级后请改用新命令；skill 目录名和 `name` 同步改为短名
+- 0.6.0 之前的历史条目使用当时的命令名，升级后以本版本的命令为准
 
 ## 0.5.0（2026-11-14）
 

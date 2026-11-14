@@ -76,10 +76,10 @@ internflow 0.4.0
     /internflow:monthly            月底月结
   收尾
     /internflow:retro              实习结束总结
-  维护
-    /internflow:rule-maintain      改规则并同步 skill
   整理
     /internflow:organize           主题笔记按模式分目录
+  维护
+    /internflow:rule-maintain      改规则并同步 skill
   帮助
     /internflow:help [config|log|monthly|retro|rules|organize|all]
 
