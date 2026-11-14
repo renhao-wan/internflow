@@ -16,6 +16,7 @@
 ---
 rules: "D:/path/to/internship/规则.md"
 log_root: "D:/path/to/internship"
+topic_grouping: module
 ---
 
 # internflow 工作区配置
@@ -25,7 +26,8 @@ log_root: "D:/path/to/internship"
 
 - `rules`：规则文件的绝对路径，唯一内容标准源
 - `log_root`：日志根目录，下面按 `<公司名>/<年月-岗位>/` 组织
-- 两个字段都写绝对路径，统一用正斜杠，避免 Windows 反斜杠转义
+- `topic_grouping`：主题笔记的分组模式，可选。`module` 按业务模块，`type` 按笔记类型，其他文本按用户的说明处理；只影响整理，不影响写日志
+- 路径都写绝对路径，统一用正斜杠，避免 Windows 反斜杠转义
 - 路径用双引号包裹，避免 YAML 把冒号、`#` 等字符误解析
 - 文件不存在时不报错，按下面的查找顺序继续
 
@@ -42,7 +44,8 @@ log_root: "D:/path/to/internship"
 - 路径问齐后直接写入，不询问用户
 - 用户本次给出的新路径在校验通过后直接覆盖旧值，不询问
 - 写入前校验：覆盖已有值时，新路径必须存在（`rules` 是文件、`log_root` 是目录），不存在就报错重问，不覆盖旧值；首次保存时 `log_root` 必须已存在，`rules` 允许文件尚未创建（由 rule-init 新建）但父目录必须存在
-- 只改 frontmatter 里的 `rules` 和 `log_root`，正文说明保持固定；不写日志、公司信息、账号、token
+- 只改 frontmatter 里的 `rules`、`log_root` 和 `topic_grouping`，正文说明保持固定；不写日志、公司信息、账号、token
+- `topic_grouping` 只在主题笔记整理成功后按需写入；写日志、审核、月结、实习总结都不改它
 - 写入前才创建 `.claude/`；读配置、提问和校验阶段都不创建
 - 更新配置不算修改日志；审核 skill 仍然不改日志正文
 - 配置不存在时，`internship-log-rule-maintain` 只询问规则文件路径，不强行创建配置；`log_root` 留到写日志或月结时补全

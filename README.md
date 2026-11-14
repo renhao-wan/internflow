@@ -3,7 +3,7 @@
 Claude Code 插件：把实习日志从「每天写」到「月结 → 素材库」的流程收敛成一套可复用的 skill，并保证内容标准只有一个源。
 
 - 插件名：`internflow`
-- 当前版本：`0.4.0`
+- 当前版本：`0.5.0`
 - 许可证：MIT
 
 ## 设计原则
@@ -42,11 +42,12 @@ claude plugin install internflow@internflow-marketplace
 | `internship-log` | 写当天日志、主题笔记 | 日常使用 |
 | `internship-log-review` | 只读审核日志，输出带行号和依据的问题清单 | 日常使用 |
 | `internship-log-monthly` | 写本月小结、收口待问、更新素材库 | 日常使用 |
+| `internship-log-organize` | 按配置的分组模式把主题笔记归入一层子目录 | 需要时 |
 | `internship-log-retro` | 实习结束时汇总「未解决」，产出简历素材、面试提纲和能力清单 | 收尾 |
 | `internship-log-rule-init` | 从零撰写规则 | 维护者 |
 | `internship-log-rule-maintain` | 修改规则并同步执行 skill 的引用 | 维护者 |
 
-`/internflow:help` 是插件内帮助，与 Claude Code 内置 `/help` 不同：内置命令列全部可用命令，插件帮助只讲 internflow 的状态、下一步和用法。支持 `/internflow:help config|log|monthly|retro|rules|all` 查看主题。
+`/internflow:help` 是插件内帮助，与 Claude Code 内置 `/help` 不同：内置命令列全部可用命令，插件帮助只讲 internflow 的状态、下一步和用法。支持 `/internflow:help config|log|monthly|retro|rules|organize|all` 查看主题。
 
 Skill 名保持 `internship-log` 等原名，避免与旧的独立 skill 撞名；加载后由插件名提供命名空间，不会出现 `internship-log:internship-log` 这种前缀。
 
@@ -65,7 +66,8 @@ Skill 名保持 `internship-log` 等原名，避免与旧的独立 skill 撞名�
 3. `internship-log-review`：需要时审日志，只读，不改日志正文。
 4. `internship-log-monthly`：月底写本月小结，挑案例进素材库。
 5. `internship-log-retro`：实习结束时汇总各月小结的「未解决」，产出简历素材、面试提纲和能力清单。正式简历不在插件范围内，写简历时从素材库和总结里挑。
-6. 规则要改时用 `internship-log-rule-maintain`；它会同时检查四个执行 skill 的引用。
+6. `internship-log-organize`：主题笔记变多时，按配置的分组模式归入子目录。
+7. 规则要改时用 `internship-log-rule-maintain`；它会同时检查四个执行 skill 的引用。
 
 第一次运行会询问规则文件和日志根目录。问齐后自动保存到项目根目录的 `.claude/internflow.local.md`，之后不用重复输入。
 
@@ -94,7 +96,7 @@ Skill 名保持 `internship-log` 等原名，避免与旧的独立 skill 撞名�
         ├── YYYY-MM.md       ← 当月日志
         ├── 素材库.md
         ├── 实习总结.md       ← 实习结束时生成
-        └── 主题笔记/
+        └── 主题笔记/         ← 新笔记平铺，整理后按模式分一层子目录
 ```
 
 插件内只有 `templates/规则.template.md`，它是章节骨架，不是规则实例。使用者复制到自己的数据目录后再填写。
@@ -109,12 +111,15 @@ Skill 名保持 `internship-log` 等原名，避免与旧的独立 skill 撞名�
 ---
 rules: "D:/path/to/internship/规则.md"
 log_root: "D:/path/to/internship"
+topic_grouping: module
 ---
 
 # internflow 工作区配置
 
 > 由 internflow skill 自动维护；含本地绝对路径，不要提交到公开仓库。
 ```
+
+`topic_grouping` 是主题笔记的分组模式，可选：`module` 按业务模块，`type` 按笔记类型，其他文本按字面理解。它只影响 `internship-log-organize`，不影响写日志；目录清单不存配置，由整理时扫描现有目录和模式决定。
 
 路径统一用正斜杠，避免 Windows 反斜杠转义；用双引号包裹，避免 YAML 把冒号、`#` 等字符误解析。约束：
 
@@ -161,6 +166,7 @@ internflow/
 │   ├── internship-log/SKILL.md
 │   ├── internship-log-review/SKILL.md
 │   ├── internship-log-monthly/SKILL.md
+│   ├── internship-log-organize/SKILL.md
 │   ├── internship-log-retro/SKILL.md
 │   ├── internship-log-rule-init/SKILL.md
 │   └── internship-log-rule-maintain/SKILL.md

@@ -20,6 +20,7 @@ description: 显示 internflow 的状态、下一步建议和命令清单。当�
 | `monthly` | 月结主题页 |
 | `retro` | 实习总结主题页 |
 | `rules` | 规则维护主题页 |
+| `organize` | 主题笔记整理主题页 |
 | 其他 | 回退精简入口页，末尾列出可用主题 |
 
 ## 读取状态
@@ -77,8 +78,10 @@ internflow 0.4.0
     /internflow:internship-log-retro           实习结束总结
   维护
     /internflow:internship-log-rule-maintain   改规则并同步 skill
+  整理
+    /internflow:internship-log-organize        主题笔记按模式分目录
   帮助
-    /internflow:help [config|log|monthly|retro|rules|all]
+    /internflow:help [config|log|monthly|retro|rules|organize|all]
 
 更多：/internflow:help all
 ```
@@ -115,6 +118,7 @@ internflow 0.4.0
   /internflow:help monthly   月结的输入、产出和时机
   /internflow:help retro     实习总结的输入、产出和时机
   /internflow:help rules     规则、流程和执行 skill 的分工
+  /internflow:help organize  主题笔记的分组模式和整理方式
 ```
 
 ## 主题页
@@ -185,6 +189,20 @@ internflow 0.4.0
 
 改规则：/internflow:internship-log-rule-maintain
 它会把改动同步到四个执行 skill 和 README。
+```
+
+### organize
+
+```text
+主题笔记整理：/internflow:internship-log-organize [module|type|--mode]
+
+按配置的 topic_grouping 把主题笔记归入一层子目录。
+  无参数   整理根目录平铺文件和未分组
+  带参数   按新模式重排全部目录，成功后问是否写回配置
+  --mode   只改配置，不移动文件
+
+修改模式：直接改配置里的 topic_grouping，或运行 --mode 重选。
+自由文本模式由 AI 按字面理解，结果不稳定；需要确定性时用 module 或 type。
 ```
 
 ## 通用约束
