@@ -16,6 +16,7 @@ description: 显示 internflow 的状态、下一步建议和命令清单。当�
 | 空 | 精简入口页：状态、下一步、命令表 |
 | `all` | 完整入口页：精简页 + 约定速查 + 主题列表 |
 | `config` | 配置主题页 |
+| `setup` | 初始化主题页 |
 | `log` | 写日志主题页 |
 | `monthly` | 月结主题页 |
 | `retro` | 实习总结主题页 |
@@ -69,6 +70,7 @@ internflow <版本>
 
 命令
   第一次
+    /internflow:setup              新建实习目录
     /internflow:rule-init          定规则、写配置
   日常
     /internflow:log                写当天日志
@@ -81,7 +83,7 @@ internflow <版本>
   维护
     /internflow:rule-maintain      改规则并同步 skill
   帮助
-    /internflow:help [config|log|monthly|retro|rules|organize|all]
+    /internflow:help [config|setup|log|monthly|retro|rules|organize|all]
 
 更多：/internflow:help all
 ```
@@ -90,7 +92,7 @@ internflow <版本>
 
 按顺序取最靠前的未满足项，最多列三条：
 
-1. 配置缺失：「未检测到配置。运行任一执行 skill 会询问规则文件和日志根目录；要从零定规则，用 `/internflow:rule-init`」
+1. 配置缺失：「未检测到配置。运行任一执行 skill 会询问规则文件和日志根目录；新建实习目录用 `/internflow:setup`，从零定规则用 `/internflow:rule-init`」
 2. 规则文件不存在：「规则文件找不到，下次运行执行 skill 时给新路径」
 3. 多个实习目录：「日志根下有多段实习，先选一段再执行」
 4. 当月没有日志：提示写今天的日志
@@ -114,6 +116,7 @@ internflow <版本>
 
 主题
   /internflow:help config    配置位置与修改方式
+  /internflow:help setup     新建实习目录
   /internflow:help log       日志结构与写法
   /internflow:help monthly   月结的输入、产出和时机
   /internflow:help retro     实习总结的输入、产出和时机
@@ -142,6 +145,18 @@ internflow <版本>
 ```
 
 未配置时只显示位置和修改方式，不显示「当前」。
+
+### setup
+
+```text
+新建实习目录：/internflow:setup
+
+询问日志根目录、入职年月、公司、岗位，
+创建 <入职年月>-<公司名>-<岗位>/，
+内含当月日志、素材库.md、主题笔记/。
+
+不覆盖已有文件；不创建规则文件、架构图、实习总结。
+```
 
 ### log
 

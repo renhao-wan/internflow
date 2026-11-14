@@ -85,6 +85,7 @@ const skillDirs = existsSync(skillsDir)
 if (skillDirs.length === 0) fail('skills/ 下没有 skill');
 
 const requiredSkills = [
+  'setup',
   'log',
   'review',
   'monthly',
