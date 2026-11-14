@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.8.2（2026-11-14）
+
+### 修复
+
+- README 第一次使用提示加入 `setup`
+- `setup` 报告给出本次日志根目录，供 `rule-init` 直接使用
+- `setup` 的 description 补齐不总结的范围
+- README 说明 skill 名与调用命令的关系
+- `check.mjs` 校验 README Skills 表覆盖所有 skill
+
 ## 0.8.1（2026-11-14）
 
 ### 修复

@@ -170,6 +170,11 @@ if (helpText) {
 }
 
 const readme = read('README.md') ?? '';
+for (const name of requiredSkills) {
+  if (!readme.includes(`| \`${name}\` |`)) {
+    fail(`README Skills 表缺少：${name}`);
+  }
+}
 const tableRows = [...readme.matchAll(/^\|\s*(\d+)\s*\|\s*(.+?)\s*\|$/gm)];
 if (tableRows.length !== sectionNames.length) {
   fail(`README 规则章节表应有 ${sectionNames.length} 行，实际 ${tableRows.length}`);

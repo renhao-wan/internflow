@@ -3,7 +3,7 @@
 Claude Code 插件：把实习日志从「每天写」到「月结 → 素材库」的流程收敛成一套可复用的 skill，并保证内容标准只有一个源。
 
 - 插件名：`internflow`
-- 当前版本：`0.8.1`
+- 当前版本：`0.8.2`
 - 许可证：MIT
 
 ## 设计原则
@@ -32,9 +32,11 @@ claude plugin marketplace add https://github.com/renhao-wan/internflow.git
 claude plugin install internflow@internflow-marketplace
 ```
 
-> **第一次使用**：先运行 `/internflow:rule-init` 定一份规则；之后日常写日志用 `/internflow:log`。完整顺序见下文「从零使用顺序」。
+> **第一次使用**：先运行 `/internflow:setup` 建实习目录，再用 `/internflow:rule-init` 定规则；之后日常写日志用 `/internflow:log`。完整顺序见下文「从零使用顺序」。
 
 ## Skills
+
+下表是 skill 名，调用时加插件前缀，如 `/internflow:log`。
 
 | Skill | 用途 | 面向 |
 |---|---|---|
