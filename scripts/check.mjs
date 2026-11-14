@@ -202,6 +202,7 @@ const pathScanFiles = [
   'CHANGELOG.md',
   ...skillDirs.map((dir) => `skills/${dir}/SKILL.md`),
 ];
+const legacyLayout = /<公司名>\s*\/\s*<[^>]*年月[^>]*>/;
 for (const rel of pathScanFiles) {
   const text = rel === 'README.md' ? readme : read(rel);
   if (text === null) continue;
@@ -209,6 +210,9 @@ for (const rel of pathScanFiles) {
     if (realPathPatterns.some((pattern) => pattern.test(match[0]))) {
       fail(`${rel} 含真实本地路径，示例应使用占位符：${match[0]}`);
     }
+  }
+  if (legacyLayout.test(text)) {
+    fail(`${rel} 仍使用两层实习目录结构，应为 <入职年月>-<公司名>-<岗位>/`);
   }
 }
 
@@ -227,7 +231,7 @@ for (const rel of [
 
 const gitignore = read('.gitignore') ?? '';
 const gitignoreLines = gitignore.split(/\r?\n/).map((line) => line.trim());
-const guarded = ['规则.md', '素材库.md', '主题笔记/', '架构图/', '20??-??.md'];
+const guarded = ['规则.md', '素材库.md', '主题笔记/', '架构图/', '20??-??.md', '20??-??-*/'];
 for (const pattern of guarded) {
   if (!gitignoreLines.includes(pattern)) {
     fail(`.gitignore 缺少用户数据防护：${pattern}`);

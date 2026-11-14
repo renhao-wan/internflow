@@ -23,6 +23,7 @@ dist/
 主题笔记/
 架构图/
 20??-??.md
+20??-??-*/
 
 # 回归样例是虚构数据，允许提交
 !tests/regression/fixtures/
