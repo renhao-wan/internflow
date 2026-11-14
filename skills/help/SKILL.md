@@ -64,22 +64,22 @@ internflow 0.4.0
   实习总结  - 未生成
 
 下一步
-  1. 今天还没写日志：/internflow:internship-log
-  2. 2026-10 已结束但没有月结：/internflow:internship-log-monthly 2026-10
+  1. 今天还没写日志：/internflow:log
+  2. 2026-10 已结束但没有月结：/internflow:monthly 2026-10
 
 命令
   第一次
-    /internflow:internship-log-rule-init       定规则、写配置
+    /internflow:rule-init          定规则、写配置
   日常
-    /internflow:internship-log                 写当天日志
-    /internflow:internship-log-review          审日志（只读）
-    /internflow:internship-log-monthly         月底月结
+    /internflow:log                写当天日志
+    /internflow:review             审日志（只读）
+    /internflow:monthly            月底月结
   收尾
-    /internflow:internship-log-retro           实习结束总结
+    /internflow:retro              实习结束总结
   维护
-    /internflow:internship-log-rule-maintain   改规则并同步 skill
+    /internflow:rule-maintain      改规则并同步 skill
   整理
-    /internflow:internship-log-organize        主题笔记按模式分目录
+    /internflow:organize           主题笔记按模式分目录
   帮助
     /internflow:help [config|log|monthly|retro|rules|organize|all]
 
@@ -90,13 +90,13 @@ internflow 0.4.0
 
 按顺序取最靠前的未满足项，最多列三条：
 
-1. 配置缺失：「未检测到配置。运行任一执行 skill 会询问规则文件和日志根目录；要从零定规则，用 `/internflow:internship-log-rule-init`」
+1. 配置缺失：「未检测到配置。运行任一执行 skill 会询问规则文件和日志根目录；要从零定规则，用 `/internflow:rule-init`」
 2. 规则文件不存在：「规则文件找不到，下次运行执行 skill 时给新路径」
 3. 多个实习目录：「日志根下有多段实习，先选一段再执行」
 4. 当月没有日志：提示写今天的日志
 5. 当月最新一条不是今天：提示写今天的日志
 6. 已结束月份缺本月小结：提示补月结，指明月份
-7. 存在已结束月份且没有实习总结：「如果实习已结束，可以运行 `/internflow:internship-log-retro`」
+7. 存在已结束月份且没有实习总结：「如果实习已结束，可以运行 `/internflow:retro`」
 8. 都满足：「当前没有待办，可以直接写日志或审日志」
 
 「实习是否结束」无法自动判断，只给建议，不下结论。
@@ -146,7 +146,7 @@ internflow 0.4.0
 ### log
 
 ```text
-写日志：/internflow:internship-log
+写日志：/internflow:log
 
 「今日做了什么」分四层
   主线  当天最值得记住的一件事，由你确认
@@ -160,7 +160,7 @@ internflow 0.4.0
 ### monthly
 
 ```text
-月结：/internflow:internship-log-monthly [YYYY-MM]
+月结：/internflow:monthly [YYYY-MM]
 
 读当月日志，写本月小结，挑案例进素材库。
 月底运行；月中运行会说明是阶段性小结。
@@ -170,7 +170,7 @@ internflow 0.4.0
 ### retro
 
 ```text
-实习总结：/internflow:internship-log-retro
+实习总结：/internflow:retro
 
 读全部月结的「未解决」、素材库和日志，逐条确认终态，
 产出简历素材、面试提纲、能力清单、待学习和已解决事项。
@@ -187,14 +187,14 @@ internflow 0.4.0
   流程      执行 skill
   实现细节  执行 skill
 
-改规则：/internflow:internship-log-rule-maintain
+改规则：/internflow:rule-maintain
 它会把改动同步到四个执行 skill 和 README。
 ```
 
 ### organize
 
 ```text
-主题笔记整理：/internflow:internship-log-organize [module|type|--mode]
+主题笔记整理：/internflow:organize [module|type|--mode]
 
 按配置的 topic_grouping 把主题笔记归入一层子目录。
   无参数   整理根目录平铺文件和未分组

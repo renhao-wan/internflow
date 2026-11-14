@@ -1,5 +1,5 @@
 ---
-name: internship-log-rule-maintain
+name: rule-maintain
 description: 维护实习日志规则文件。当用户说“改规则”“加一条规则”“调整规则文件”“这条规则该怎么定”时使用。判断一条要求属于内容标准、流程还是实现细节，改到规则文件或对应的执行 skill，并在改规则后检查四个执行 skill 和插件根目录 README 的引用、节号与数字复述是否需同步。
 ---
 
@@ -22,7 +22,7 @@ description: 维护实习日志规则文件。当用户说“改规则”“加�
 1. 问清用户要改什么：新增 / 修改 / 删除，具体到一句话。
 2. 按插件根目录的 `references/workspace.md`（`${CLAUDE_PLUGIN_ROOT}/references/workspace.md`）读项目根目录的 `.claude/internflow.local.md` 定位规则文件；有配置且用户给了新路径时按 workspace.md 直接更新；没有配置时只询问规则文件路径，不强行创建配置，`log_root` 留到写日志或月结时补全；路径失效时询问用户，不要猜。
 3. 确认规则实例路径。规则实例只在用户数据目录，插件内只有 `templates/规则.template.md`（`${CLAUDE_PLUGIN_ROOT}/templates/规则.template.md`）；不要把插件模板当成用户规则来改。
-4. 读规则文件全文，读四个执行 skill（`internship-log`、`internship-log-review`、`internship-log-monthly`、`internship-log-retro`）和插件根目录 `README.md`（`${CLAUDE_PLUGIN_ROOT}/README.md`）的「规则章节顺序」表，找出哪些地方已经引用了这条内容——引用处、复述处和节号副本都是后续的同步点。
+4. 读规则文件全文，读四个执行 skill（`log`、`review`、`monthly`、`retro`）和插件根目录 `README.md`（`${CLAUDE_PLUGIN_ROOT}/README.md`）的「规则章节顺序」表，找出哪些地方已经引用了这条内容——引用处、复述处和节号副本都是后续的同步点。
 5. 确认改动属于上面哪一类；跨类时拆开处理（标准进规则，流程进 skill）。
 
 ## 第二步：改规则文件

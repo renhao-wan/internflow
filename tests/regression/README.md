@@ -34,7 +34,7 @@
 
 ### R1 写日志
 
-运行 `/internflow:internship-log`，用虚构内容描述 `2026-11-02`。
+运行 `/internflow:log`，用虚构内容描述 `2026-11-02`。
 
 检查：
 
@@ -49,7 +49,7 @@
 
 ### R2 审核（整月）
 
-运行 `/internflow:internship-log-review 2026-10`。
+运行 `/internflow:review 2026-10`。
 
 检查：
 
@@ -62,7 +62,7 @@
 
 ### R3 月结
 
-运行 `/internflow:internship-log-monthly`。
+运行 `/internflow:monthly`。
 
 检查：
 
@@ -74,7 +74,7 @@
 
 ### R4 改规则
 
-运行 `/internflow:internship-log-rule-maintain`，把「保密」和「月结与素材库」调换顺序。
+运行 `/internflow:rule-maintain`，把「保密」和「月结与素材库」调换顺序。
 
 检查：
 
@@ -95,7 +95,7 @@
 
 ### R6 实习总结
 
-先跑完 R3，让当月日志里有「本月小结」和「未解决」，再运行 `/internflow:internship-log-retro`。
+先跑完 R3，让当月日志里有「本月小结」和「未解决」，再运行 `/internflow:retro`。
 
 检查：
 
@@ -117,7 +117,7 @@
 
 ### R7 打杂日
 
-运行 `/internflow:internship-log`，描述一天只有联调、跑测试、收口待问，没有任何交付。
+运行 `/internflow:log`，描述一天只有联调、跑测试、收口待问，没有任何交付。
 
 检查：
 
@@ -130,7 +130,7 @@
 
 ### R8 主题笔记整理
 
-在主题笔记目录里平铺 4 个文件，运行 `/internflow:internship-log-organize`。
+在主题笔记目录里平铺 4 个文件，运行 `/internflow:organize`。
 
 检查：
 
@@ -144,7 +144,7 @@
 
 ### R9 改分组模式
 
-在 R8 之后运行 `/internflow:internship-log-organize type`。
+在 R8 之后运行 `/internflow:organize type`。
 
 检查：
 
@@ -156,7 +156,7 @@
 
 ### R10 续写已整理主题
 
-R8 之后运行 `/internflow:internship-log`，描述与已整理笔记同主题的内容。
+R8 之后运行 `/internflow:log`，描述与已整理笔记同主题的内容。
 
 检查：
 

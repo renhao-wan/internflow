@@ -3,7 +3,7 @@
 Claude Code 插件：把实习日志从「每天写」到「月结 → 素材库」的流程收敛成一套可复用的 skill，并保证内容标准只有一个源。
 
 - 插件名：`internflow`
-- 当前版本：`0.5.0`
+- 当前版本：`0.6.0`
 - 许可证：MIT
 
 ## 设计原则
@@ -21,7 +21,7 @@ Claude Code 插件：把实习日志从「每天写」到「月结 → 素材库
 claude --plugin-dir "/path/to/internflow"
 ```
 
-加载后 skill 以插件名为命名空间，例如 `internflow:internship-log`。修改 skill 后重开会话，或在会话里运行 `/reload-plugins`。
+加载后 skill 以插件名为命名空间，例如 `internflow:log`。修改 skill 后重开会话，或在会话里运行 `/reload-plugins`。
 
 本地 `--plugin-dir` 不依赖 marketplace；`marketplace.json` 只用于分发。
 
@@ -32,42 +32,42 @@ claude plugin marketplace add https://github.com/renhao-wan/internflow.git
 claude plugin install internflow@internflow-marketplace
 ```
 
-> **第一次使用**：先运行 `/internflow:internship-log-rule-init` 定一份规则；之后日常写日志用 `/internflow:internship-log`。完整顺序见下文「从零使用顺序」。
+> **第一次使用**：先运行 `/internflow:rule-init` 定一份规则；之后日常写日志用 `/internflow:log`。完整顺序见下文「从零使用顺序」。
 
 ## Skills
 
 | Skill | 用途 | 面向 |
 |---|---|---|
 | `help` | 显示配置状态、下一步建议和命令清单 | 入口 |
-| `internship-log` | 写当天日志、主题笔记 | 日常使用 |
-| `internship-log-review` | 只读审核日志，输出带行号和依据的问题清单 | 日常使用 |
-| `internship-log-monthly` | 写本月小结、收口待问、更新素材库 | 日常使用 |
-| `internship-log-organize` | 按配置的分组模式把主题笔记归入一层子目录 | 需要时 |
-| `internship-log-retro` | 实习结束时汇总「未解决」，产出简历素材、面试提纲和能力清单 | 收尾 |
-| `internship-log-rule-init` | 从零撰写规则 | 维护者 |
-| `internship-log-rule-maintain` | 修改规则并同步执行 skill 的引用 | 维护者 |
+| `log` | 写当天日志、主题笔记 | 日常使用 |
+| `review` | 只读审核日志，输出带行号和依据的问题清单 | 日常使用 |
+| `monthly` | 写本月小结、收口待问、更新素材库 | 日常使用 |
+| `organize` | 按配置的分组模式把主题笔记归入一层子目录 | 需要时 |
+| `retro` | 实习结束时汇总「未解决」，产出简历素材、面试提纲和能力清单 | 收尾 |
+| `rule-init` | 从零撰写规则 | 维护者 |
+| `rule-maintain` | 修改规则并同步执行 skill 的引用 | 维护者 |
 
 `/internflow:help` 是插件内帮助，与 Claude Code 内置 `/help` 不同：内置命令列全部可用命令，插件帮助只讲 internflow 的状态、下一步和用法。支持 `/internflow:help config|log|monthly|retro|rules|organize|all` 查看主题。
 
-Skill 名保持 `internship-log` 等原名，避免与旧的独立 skill 撞名；加载后由插件名提供命名空间，不会出现 `internship-log:internship-log` 这种前缀。
+Skill 名在插件内是短名（`log`、`review` 等），加载后由插件名提供命名空间，实际调用是 `/internflow:log`。
 
 ### 审核范围
 
 | 调用 | 审核范围 |
 |---|---|
-| `/internflow:internship-log-review` | 最新月份的完整日志 |
-| `/internflow:internship-log-review 2026-10` | 指定月份 |
-| `/internflow:internship-log-review today` | 只审最新一条记录 |
+| `/internflow:review` | 最新月份的完整日志 |
+| `/internflow:review 2026-10` | 指定月份 |
+| `/internflow:review today` | 只审最新一条记录 |
 
 ## 从零使用顺序
 
-1. `internship-log-rule-init`：定一份规则，写到你的用户数据目录。
-2. `internship-log`：每天写日志；技术细节外置到 `主题笔记/`。
-3. `internship-log-review`：需要时审日志，只读，不改日志正文。
-4. `internship-log-monthly`：月底写本月小结，挑案例进素材库。
-5. `internship-log-retro`：实习结束时汇总各月小结的「未解决」，产出简历素材、面试提纲和能力清单。正式简历不在插件范围内，写简历时从素材库和总结里挑。
-6. `internship-log-organize`：主题笔记变多时，按配置的分组模式归入子目录。
-7. 规则要改时用 `internship-log-rule-maintain`；它会同时检查四个执行 skill 的引用。
+1. `rule-init`：定一份规则，写到你的用户数据目录。
+2. `log`：每天写日志；技术细节外置到 `主题笔记/`。
+3. `review`：需要时审日志，只读，不改日志正文。
+4. `monthly`：月底写本月小结，挑案例进素材库。
+5. `retro`：实习结束时汇总各月小结的「未解决」，产出简历素材、面试提纲和能力清单。正式简历不在插件范围内，写简历时从素材库和总结里挑。
+6. `organize`：主题笔记变多时，按配置的分组模式归入子目录。
+7. 规则要改时用 `rule-maintain`；它会同时检查四个执行 skill 的引用。
 
 第一次运行会询问规则文件和日志根目录。问齐后自动保存到项目根目录的 `.claude/internflow.local.md`，之后不用重复输入。
 
@@ -119,7 +119,7 @@ topic_grouping: module
 > 由 internflow skill 自动维护；含本地绝对路径，不要提交到公开仓库。
 ```
 
-`topic_grouping` 是主题笔记的分组模式，可选：`module` 按业务模块，`type` 按笔记类型，其他文本按字面理解。它只影响 `internship-log-organize`，不影响写日志；目录清单不存配置，由整理时扫描现有目录和模式决定。
+`topic_grouping` 是主题笔记的分组模式，可选：`module` 按业务模块，`type` 按笔记类型，其他文本按字面理解。它只影响 `organize`，不影响写日志；目录清单不存配置，由整理时扫描现有目录和模式决定。
 
 路径统一用正斜杠，避免 Windows 反斜杠转义；用双引号包裹，避免 YAML 把冒号、`#` 等字符误解析。约束：
 
@@ -136,7 +136,7 @@ topic_grouping: module
 
 ### 规则章节顺序
 
-skill 和 README 里的「按规则第 X 节」按下面顺序引用。规则增删或重排章节后，用 `internship-log-rule-maintain` 同步更新引用和这张表；skill 和 README 都不要复述规则里的数字（轮数、条数上限等），需要时改成「按规则第 X 节」。
+skill 和 README 里的「按规则第 X 节」按下面顺序引用。规则增删或重排章节后，用 `rule-maintain` 同步更新引用和这张表；skill 和 README 都不要复述规则里的数字（轮数、条数上限等），需要时改成「按规则第 X 节」。
 
 | 节号 | 章节 |
 |---|---|
@@ -163,13 +163,13 @@ internflow/
 │   └── workflows/validate.yml
 ├── skills/
 │   ├── help/SKILL.md
-│   ├── internship-log/SKILL.md
-│   ├── internship-log-review/SKILL.md
-│   ├── internship-log-monthly/SKILL.md
-│   ├── internship-log-organize/SKILL.md
-│   ├── internship-log-retro/SKILL.md
-│   ├── internship-log-rule-init/SKILL.md
-│   └── internship-log-rule-maintain/SKILL.md
+│   ├── log/SKILL.md
+│   ├── review/SKILL.md
+│   ├── monthly/SKILL.md
+│   ├── organize/SKILL.md
+│   ├── retro/SKILL.md
+│   ├── rule-init/SKILL.md
+│   └── rule-maintain/SKILL.md
 ├── templates/
 │   ├── 规则.template.md
 │   ├── 日志.template.md

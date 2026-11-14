@@ -48,7 +48,7 @@ topic_grouping: module
 - `topic_grouping` 只在主题笔记整理成功后按需写入；写日志、审核、月结、实习总结都不改它
 - 写入前才创建 `.claude/`；读配置、提问和校验阶段都不创建
 - 更新配置不算修改日志；审核 skill 仍然不改日志正文
-- 配置不存在时，`internship-log-rule-maintain` 只询问规则文件路径，不强行创建配置；`log_root` 留到写日志或月结时补全
+- 配置不存在时，`rule-maintain` 只询问规则文件路径，不强行创建配置；`log_root` 留到写日志或月结时补全
 
 ## 失效处理
 

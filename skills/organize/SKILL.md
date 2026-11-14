@@ -1,6 +1,6 @@
 ---
-name: internship-log-organize
-description: 整理主题笔记。当用户说“整理主题笔记”“把笔记分目录”“笔记太乱”，或调用 /internflow:internship-log-organize 时使用。按配置的分组模式把主题笔记归入一层子目录，只移动不改内容。
+name: organize
+description: 整理主题笔记。当用户说“整理主题笔记”“把笔记分目录”“笔记太乱”，或调用 /internflow:organize 时使用。按配置的分组模式把主题笔记归入一层子目录，只移动不改内容。
 ---
 
 # 主题笔记整理

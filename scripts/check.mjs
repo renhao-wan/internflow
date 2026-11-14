@@ -85,13 +85,13 @@ const skillDirs = existsSync(skillsDir)
 if (skillDirs.length === 0) fail('skills/ 下没有 skill');
 
 const requiredSkills = [
-  'internship-log',
-  'internship-log-review',
-  'internship-log-monthly',
-  'internship-log-organize',
-  'internship-log-retro',
-  'internship-log-rule-init',
-  'internship-log-rule-maintain',
+  'log',
+  'review',
+  'monthly',
+  'organize',
+  'retro',
+  'rule-init',
+  'rule-maintain',
   'help',
 ];
 for (const name of requiredSkills) {
