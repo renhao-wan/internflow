@@ -5,13 +5,13 @@
   },
   "metadata": {
     "description": "Local marketplace for the internflow plugin",
-    "version": "0.8.0"
+    "version": "0.8.1"
   },
   "plugins": [
     {
       "name": "internflow",
       "description": "Internship log workflow: write, review, and summarize from a single rule source",
-      "version": "0.8.0",
+      "version": "0.8.1",
       "source": "./",
       "strict": false
     }
